@@ -6,32 +6,39 @@ namespace Sravnenie
 	{
 		static void Main( string[] args )
 		{
-			Console.WriteLine( "введите строку" );
-			string text = Console.ReadLine();
+			// методы/процедуры нужны, чтобы читая код сразу было понятно
+			// что тут происходит. C Console.WriteLine( введите текст )
+			// и Console.ReadLine() тоже понятно, но мы говорим про вообще
+			string text = Utils.AskUserForString( "введите строку" );
 
 			var res = Obrabotka( text );
+			Console.WriteLine( "  ЧЕТ: {0} ", res.Evens );
+			Console.WriteLine( "НЕЧЕТ: {0} ", res.Odds );
 
-			Console.WriteLine( "нечетных символов {0} ", res.s0 );
-			Console.WriteLine( "четных символов {0} ", res.s1 );
-			Console.ReadKey();
+			// покажем юзеру, что прога остановилась
+			// потому что иногда мы ничего не выводи, 
+			// и непонятно, прога еще работает или уже нет
+			Console.WriteLine( "\nDone." );
+			// символ \n выше добавляет пустую строку
+			Console.ReadLine();
 		}
 
-		static (string s1, string s0) Obrabotka( string text )
+		static (string Evens, string Odds) Obrabotka( string text )
 		{
-			string s0 = null;
-			string s1 = null;
+			string se = null;
+			string so = null;
 			for (int i = 0; i < text.Length; i++)
 			{
 				if ((i % 2 == 0))
-				{
-					s0 = s0 + text[ i ];
-				}
+					// чтобы не писать s = s +
+					// можно писать сразу += то же самое
+					se += text[ i ];  
 				else
-				{
-					s1 = s1 + text[ i ];
-				}
+					/* это многострочный коммент выделенный по-другому - слэш+звездочка
+						если одна строка кода, то ее лучше не выделять скобками { }	*/
+					so += text[ i ];
 			}
-			return (s0, s1);
+			return (se, so);
 		}
 	}
 }
