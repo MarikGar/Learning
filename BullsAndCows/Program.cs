@@ -45,6 +45,10 @@ namespace BullsAndCows
 			// WTF ?
 			// чтобы строку преобразовать в число используй int.Parse(str)
 
+			// назови строку, что загадал комп как guess
+			// назови строку, которую вводит пользователь как input, userTry, option или proposed
+			// как больше нравится
+
 			int bull = 0;
 			int cow = 0;
 			for (int i = 0; i<number.Length; i++ ) // количество попыток
@@ -52,6 +56,9 @@ namespace BullsAndCows
 				// измени на Utils.AskUserForString()
 				Console.WriteLine( "введите свой вариант" );
 				string number1 = Console.ReadLine(); // вводится загадываемое число
+
+				// введи проверку, что пользовательь не ошибся и не ввел слишком короткую или длиную строку
+				// иначе нет смысла провреять быки и коровы если их длина не совпадает
 
 				// остальное пока не смотрел
 				for (int k = 0; k < number1.Length; k++) // проверка на быка
