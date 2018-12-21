@@ -29,28 +29,43 @@ namespace BullsAndCows
 	{
 		static void Main( string[] args )
 		{
-			var userInput = Utils.AskUserForString( "введи строку" );
-			Console.WriteLine( "юзер ввел: " + userInput );
+			var snum = Utils.AskUserForString( "введите число от 2 до 9" );
+			if (!int.TryParse( snum, out int num ))
+			{
+				// не одна строка, потому в { }
+				Utils.Println( "вы ввели не число", ConsoleColor.Red );
+				return; // выходим из Main, а значит и из програмы
+			}
+
+			var mnum = Math.Max( 2, Math.Min( 1_000_000_000, num ));
+			Console.WriteLine( $"вы ввели число {num}. я его изменил до {mnum}" );
+			var rand = Utils.GetRandom( mnum );
+			Utils.Println( $"я загадал число с {mnum}цифр: {rand}", ConsoleColor.Magenta );
+
+			Console.WriteLine( "Done." );
 			Console.ReadLine();
+
 		}
+
+		const int TryCount = 10;
+		const int DigitCount = 4;
 
 		static void myCode()
 		{
 			// не надо изобретать колеса
 			// измени на 
-			Console.WriteLine( "число загадано" );
+			Console.WriteLine( $"я загадал число с {DigitCount} цифрами. вам надо его отгадать за {TryCount} попыток" );
 			// вводится загадываемое число
-			string number = Utils.GetRandom( 4 ); // я не понимаю, хули ты тупишь в 10ый раз?
-												  // пишешь, что вводится загадываемое число, а ниже используешь как количество попыток
-												  // WTF?
-												  // NB в плохом коде возникает много WTF, в хорошем мало
-												  // number & number1 - ничего не говорящие имена
-												  // number - это строка
-												  // number.Length - это длина строки
-												  // как ты длину строки используешь как количество попыток? 
-												  // получается "hello" и "55555" дают тебе 5 попыток? 
-												  // WTF ?
-												  // чтобы строку преобразовать в число используй int.Parse(str)
+			string number = Utils.GetRandom( DigitCount );
+
+			// NB в плохом коде возникает много WTF, в хорошем мало
+			// number & number1 - ничего не говорящие имена
+			// number - это строка
+			// number.Length - это длина строки
+			// как ты длину строки используешь как количество попыток? 
+			// получается "hello" и "55555" дают тебе 5 попыток? 
+			// WTF ?
+			// чтобы строку преобразовать в число используй int.Parse(str)
 
 			// назови строку, что загадал комп как guess
 			// назови строку, которую вводит пользователь как input, userTry, option или proposed
