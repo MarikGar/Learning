@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sravnenie
+namespace Learning
 {
 	// класс всяких утилиток/методов
 	public static class Utils
