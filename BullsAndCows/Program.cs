@@ -42,7 +42,7 @@ namespace BullsAndCows
 
 			// если мы оказались здесь (юзерне отгадал за 12 попыток, иначе бы мы вышли из функции по return)
 			// то юзер не отгадал. покажем ему наше загаданное число
-			Console.WriteLine( $"К сожалению Вы не отгадали мой число: {guess}" );
+			Utils.Println( $"К сожалению Вы не отгадали мой число: {guess}", ConsoleColor.Red );
 		}
 
 		static (int bulls, int cows) CalcBullsAndCows( string guess, string userTry )
