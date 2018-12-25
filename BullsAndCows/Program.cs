@@ -29,70 +29,56 @@ namespace BullsAndCows
 	{
 		static void Main( string[] args )
 		{
-			var userInput = Utils.AskUserForString( "введи строку" );
-			Console.WriteLine( "юзер ввел: " + userInput );
-			Console.ReadLine();
-		}
-
-		static void myCode()
-		{
-			// не надо изобретать колеса
-			// измени на 
-			Console.WriteLine( "число загадано" );
-			// вводится загадываемое число
-			string number = Utils.GetRandom( 4 ); // я не понимаю, хули ты тупишь в 10ый раз?
-												  // пишешь, что вводится загадываемое число, а ниже используешь как количество попыток
-												  // WTF?
-												  // NB в плохом коде возникает много WTF, в хорошем мало
-												  // number & number1 - ничего не говорящие имена
-												  // number - это строка
-												  // number.Length - это длина строки
-												  // как ты длину строки используешь как количество попыток? 
-												  // получается "hello" и "55555" дают тебе 5 попыток? 
-												  // WTF ?
-												  // чтобы строку преобразовать в число используй int.Parse(str)
-
-			// назови строку, что загадал комп как guess
-			// назови строку, которую вводит пользователь как input, userTry, option или proposed
-			// как больше нравится
-
-			int bull = 0;
-			int cow = 0;
-			for (int i = 0; i < number.Length; i++) // количество попыток
-			{
-				// измени на Utils.AskUserForString()
-				string number1 = Utils.AskUserForString( "введите свой вариант" ); // вводится загадываемое число
-
-				// введи проверку, что пользовательь не ошибся и не ввел слишком короткую или длиную строку
-				// иначе нет смысла провреять быки и коровы если их длина не совпадает
-
-				// остальное пока не смотрел
-				for (int k = 0; k < number1.Length; k++) // проверка на быка
-				{
-
-					if (number1[ k ] == number[ k ])
-					{
-						bull = bull + 1;                    // счетчик сколько быков
-					}
-					else
-					{
-						for (int s = 0; s < number.Length; s++)
-						{
-							if (number1[ k ] == number[ s ])
-							{
-								cow = cow + 1;                 // счетчик на корову
-
-							}
-
-						}
-					}
-
-
-				}
-				Console.WriteLine( "быков {0}", bull );
-				Console.WriteLine( "коров {0}", cow );
+			var guees = Utils.GetRandom( 4 );
+			var userInput = Utils.AskUserForString( "Ведите свой вариант" ); 
+			if (guees == userInput)
+			{ 
+				Console.WriteLine( "Вы ввели правильное значение" ); // здесь еще должно быть количество попыток
+				
 			}
+			else
+			{
+				Console.WriteLine( "хуй" ); // здесь будет результат функции static (int bull, int cow) myCode( guees , userInput)
+
+			}
+			Console.ReadLine();
 
 		}
 	}
 }
+static (int bull, int cow) myCode( guees , userInput)
+{
+	int bull = 0;
+	int cow = 0;
+	for (int i = 0; i < guees.Length; i++) // количество попыток
+	{
+		for (int k = 0; k < userInput.Length; k++) // проверка на быка
+		{
+
+			if (userInput[ k ] == guees[ k ])
+			{
+				bull = bull + 1;                    // счетчик сколько быков
+			}
+			else
+			{
+				for (int s = 0; s < guees.Length; s++)
+				{
+					if (userInput[ k ] == guees[ s ])
+					{
+						cow = cow + 1;                 // счетчик на корову
+
+					}
+
+				}
+			}
+
+
+		}
+		return (bull, cow);
+	}
+
+}
+	}
+}
+
+		
