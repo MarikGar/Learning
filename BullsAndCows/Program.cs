@@ -7,6 +7,8 @@ namespace BullsAndCows
 {
 	class Program
 	{
+		const int TryCount = 12; // количестов попыток
+		const int DigitCount = 4; // количество цифр в числе
 		static void Main( string[] args )
 		{			
 			MultiGame();
@@ -21,9 +23,9 @@ namespace BullsAndCows
 			Console.Clear();
 			// комп загадал 4хзначное число
 			var guess = Utils.GetRandom( 4 );
-			Utils.Println( "Я загадл 4хзначное число.У Вас есть 12 попыток, чтобы отгадать его", ConsoleColor.DarkMagenta );
+			Utils.Println( "Я загадл 4хзначное число.У Вас есть 12 попыток, чтобы отгадать его", ConsoleColor.Magenta );
 			// у юзера есть 12 попыток отгадать число
-			for (int k = 1; k <= 12; ++k)
+			for (int k = 1; k <= TryCount; ++k)
 			{
 				// запросим у юзреа очередную попытку
 				var userTry = Utils.AskUserForString( $"попытка №{k}" );
