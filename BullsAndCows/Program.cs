@@ -9,10 +9,11 @@ namespace BullsAndCows
 	{
 		const int TryCount = 12; // количестов попыток
 		const int DigitCount = 4; // количество цифр в числе
+
+
 		static void Main( string[] args )
 		{			
 			MultiGame();
-
 			Utils.Print ( "Спасибо за игру", ConsoleColor.Magenta );
 			Console.ReadLine();
 		}
@@ -21,10 +22,10 @@ namespace BullsAndCows
 		static void Game()
 		{
 			Console.Clear();
-			// комп загадал 4хзначное число
+			// комп загадал DigitCount -х значное число
 			var guess = Utils.GetRandom( 4 );
 			Utils.Println($"Я загадл {DigitCount}-х значное число.У Вас есть {TryCount} попыток, чтобы отгадать его", ConsoleColor.Magenta );
-			// у юзера есть 12 попыток отгадать число
+			// у юзера есть TryCount попыток отгадать число
 			for (int k = 1; k <= TryCount; ++k)
 			{
 				// запросим у юзреа очередную попытку
@@ -45,7 +46,7 @@ namespace BullsAndCows
 				var calcs = CalcBullsAndCows( guess, userTry );
 
 				// покажем юзеру его результаты
-				Utils.Println( $"{calcs.bulls} быков, {calcs.cows} коров", ConsoleColor.White );
+				Utils.Println( $"{calcs.bulls} быков, {calcs.cows} {CowsToString}", ConsoleColor.White );
 			}
 
 			// если мы оказались здесь, то юзер не отгадал (иначе бы мы вышли из функции по return)
@@ -54,7 +55,7 @@ namespace BullsAndCows
 			Console.Clear();
 		}
 
-		static bool CheckUserTry( string userTry, int needLength )
+		static bool CheckUserTry( string userTry, int needLength ) // проверка на количество символов, соответствует ли длина
 		{
 			if (userTry.Length != needLength)
 			{
@@ -64,14 +65,14 @@ namespace BullsAndCows
 
 			if (!int.TryParse( userTry, out var num ))
 			{
-				Utils.Println( $"должно быть число", ConsoleColor.Red );
+				Utils.Println( $"должно быть число", ConsoleColor.Red ); // проверка на то что символы цифры 
 				return false;
 			}
 
 			return true;
 		}
 
-		static (int bulls, int cows) CalcBullsAndCows( string guess, string userTry )
+		static (int bulls, int cows) CalcBullsAndCows( string guess, string userTry ) //  блок подсчета быков и коров
 		{
 			var sums = new int[ 10 ];
 			int bulls = 0, cows = 0;
@@ -85,8 +86,38 @@ namespace BullsAndCows
 			}
 			cows = sums.Sum();
 			return (bulls, cows);
+		}		
+
+		static (string cowsEnd) CowsToString( int cows )
+		{
+			string cowsEnd = "";
+			switch(3)
+			{
+				case 1:
+					if (cows < 10 || cows >19 )
+					{
+						if ((cows % 10 != 0) && (cows % 10 !=1))
+						
+							cowsEnd = "коровы";						
+					}
+					break;
+				case 2:
+					if (cows < 10 || cows >19 )
+					{
+						if (cows % 10 ==1)
+						
+							cowsEnd = "корова";						
+					}
+					break;
+				case 3:
+					cowsEnd = "коровов";						
+					break;
+			}
+			return cowsEnd;
+
 		}
 		#endregion
+
 
 		static void MultiGame()
 		{
@@ -100,6 +131,7 @@ namespace BullsAndCows
 			
 
 		}
+
 
 		static void MultiGame2()
 		{
