@@ -91,42 +91,27 @@ namespace BullsAndCows
 			return (bulls, cows);
 		}		
 
-		static string CowsToString (int cows)
+		static string CowsToString( int cows ) => NumberToString( cows, "корова", "коровы", "коров" );
+
+		static string BullsToString( int bulls ) => NumberToString( bulls, "бык", "быка", "быков" );
+
+		static string NumberToString( int number, string one, string twoOrthreeOrfour , string other )
 		{
-			var c100 = cows % 100;
+			var c100 = number % 100;
 			if (10 <= c100 && c100 < 19)
-				return $"{cows} коров";
+				return $"{number} {other}";
 			switch (c100 % 10)
 			{	
 				case 1:
-					return $"{cows} корова";
+					return $"{number} {one}";
 				case 2:
 				case 3:
 				case 4:
-					return $"{cows} коровы";
+					return $"{number} {twoOrthreeOrfour}";
 				default :
-					return $"{cows} коров";
-			}
+					return $"{number} {other}";
+			}	
 		}
-		static string BullsToString (int bulls)
-		{
-			var b100 = bulls % 100;
-			if (10 <= b100 && b100 < 19)
-				return $"{bulls} быков";
-			switch (b100 % 10)
-			{	
-				case 1:
-					return $"{bulls} бык";
-				case 2:
-				case 3:
-				case 4:
-					return $"{bulls} быка";
-				default :
-					return $"{bulls} быков";
-			}
-
-		}
-			
 		#endregion
 
 
