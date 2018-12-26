@@ -10,7 +10,7 @@ namespace BullsAndCows
 		static void Main( string[] args )
 		{
 			Game();
-
+			Con();
 			Console.WriteLine( "\nDone." );
 			Console.ReadLine();
 		}
@@ -81,6 +81,22 @@ namespace BullsAndCows
 			cows = sums.Sum();
 			return (bulls, cows);
 		}
-		
+		static void Con()
+		{
+			Found :
+			Console.WriteLine( "Введите Y чтобы продолжить или N чтобы завершить " );
+			string ot = Console.ReadLine();
+			if ((ot == "y") || (ot == "Y"))
+			{
+				Game();
+				goto Found;
+			}
+			else
+			{
+
+			}
+			
+
+		}
 	}
 }
