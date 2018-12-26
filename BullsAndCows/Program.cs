@@ -44,7 +44,8 @@ namespace BullsAndCows
 
 				// подсчитаем количество быков и коров
 				var calcs = CalcBullsAndCows( guess, userTry );
-				Console.WriteLine( $"{strBulls}, {strCows}" );
+				var strCows = CowsToString( calcs.cows );
+				Console.WriteLine( $"222222222, {strCows}" );
 
 
 				// покажем юзеру его результаты
@@ -92,21 +93,21 @@ namespace BullsAndCows
 			return (bulls, cows);
 		}		
 
-		static string CowsToString (calcs.cows)
+		static string CowsToString (int cows)
 		{
 			var c100 = cows % 100;
 			if (10 <= c100 && c100 < 19)
-				return $"{calcs.cows} коров";
+				return $"{cows} коров";
 			switch (c100 % 10)
 			{	
 				case 1:
-					return $"{calcs.cows} корова";
+					return $"{cows} корова";
 				case 2:
 				case 3:
 				case 4:
-					return $"{calcs.cows} коровы";
+					return $"{cows} коровы";
 				default :
-					return $"{calcs.cows} коров";
+					return $"{cows} коров";
 			}
 
 		}
