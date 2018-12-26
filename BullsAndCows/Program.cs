@@ -44,10 +44,15 @@ namespace BullsAndCows
 
 				// подсчитаем количество быков и коров
 				var calcs = CalcBullsAndCows( guess, userTry );
-
+				Олег Зеленый, [26.12.18 22:26]
+				var strCows = CowsToString( cows );
+				Console.WriteLine( $"{strBulls}, {strCows}" );
+				
 				// покажем юзеру его результаты
-				Utils.Println( $"{calcs.bulls} быков, {calcs.cows} {CowsToString}", ConsoleColor.White );
+				Utils.Println( $"{calcs.bulls} быков, {calcs.cows} {CowsToString.CowsEnd}", ConsoleColor.White );
+
 			}
+
 
 			// если мы оказались здесь, то юзер не отгадал (иначе бы мы вышли из функции по return)
 			// покажем ему наше загаданное число
@@ -88,34 +93,25 @@ namespace BullsAndCows
 			return (bulls, cows);
 		}		
 
-		static (string cowsEnd) CowsToString( int cows )
+		static string StringToCows (int cows)
 		{
-			string cowsEnd = "";
-			switch(3)
-			{
+			var c100 = calcs.cows % 100;
+			if (10 <= c100 && c100 < 19)
+				return $"{calcs.cowss} коров";
+			switch (c100 % 10)
+			{	
 				case 1:
-					if (cows < 10 || cows >19 )
-					{
-						if ((cows % 10 != 0) && (cows % 10 !=1))
-						
-							cowsEnd = "коровы";						
-					}
-					break;
+					return $"{calcs.cowss} корова";
 				case 2:
-					if (cows < 10 || cows >19 )
-					{
-						if (cows % 10 ==1)
-						
-							cowsEnd = "корова";						
-					}
-					break;
 				case 3:
-					cowsEnd = "коровов";						
-					break;
+				case 4:
+					return $"{calcs.cows} коровы";
+				default :
+					return $"{calcs.cows} коров";
 			}
-			return cowsEnd;
 
 		}
+			
 		#endregion
 
 
@@ -145,5 +141,7 @@ namespace BullsAndCows
 				if (yes.ToLower() != "y") break;
 			}
 		}
+
+		
 	}
 }
