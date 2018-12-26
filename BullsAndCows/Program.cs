@@ -23,7 +23,7 @@ namespace BullsAndCows
 			Console.Clear();
 			// комп загадал 4хзначное число
 			var guess = Utils.GetRandom( 4 );
-			Utils.Println( "Я загадл 4хзначное число.У Вас есть 12 попыток, чтобы отгадать его", ConsoleColor.Magenta );
+			Utils.Println($"Я загадл {DigitCount}-х значное число.У Вас есть {TryCount} попыток, чтобы отгадать его", ConsoleColor.Magenta );
 			// у юзера есть 12 попыток отгадать число
 			for (int k = 1; k <= TryCount; ++k)
 			{
