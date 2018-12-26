@@ -9,7 +9,6 @@ namespace BullsAndCows
 	{
 		static void Main( string[] args )
 		{			
-			Console.WriteLine( "Угадайте загажанное четырех значное число , у вас 12 попыток", ConsoleColor.Magenta );
 			MultiGame();
 
 			Utils.Print ( "Спасибо за игру", ConsoleColor.Magenta );
@@ -22,7 +21,7 @@ namespace BullsAndCows
 			Console.Clear();
 			// комп загадал 4хзначное число
 			var guess = Utils.GetRandom( 4 );
-			Utils.Println( "Угадайте загаданное четырех значное число , у вас 12 попыток", ConsoleColor.DarkMagenta );
+			Utils.Println( "Я загадл 4хзначное число.У Вас есть 12 попыток, чтобы отгадать его", ConsoleColor.DarkMagenta );
 			// у юзера есть 12 попыток отгадать число
 			for (int k = 1; k <= 12; ++k)
 			{
