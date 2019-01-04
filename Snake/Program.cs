@@ -13,9 +13,9 @@ namespace Snake
 			Console.WriteLine( "Введите длину сторон поля:  " );
 			int len = int.Parse( Console.ReadLine() );
 			Console.Clear();
-			
-			DrawHorizontal( posx, posy, len );		//
-			DrawVertical( posx, posy, len ); // вызываешь спараметров. я б тоже матерился
+			DrawHorizontal( posx, posy, len );		
+			DrawVertical( posx, posy, len );
+			SnakeBody( posx, posy );
 			Console.WriteLine();
 			Console.ReadKey();
 
@@ -41,19 +41,28 @@ namespace Snake
 
 
 		// то же самое
-		static void DrawVertical( int posx, int posy, int len )  // принимает 3 параметра
+		static void DrawVertical( int x, int y, int len )  // принимает 3 параметра
 		{
 			for (int i = 0; i < len; ++i)
 			{
-				Console.SetCursorPosition( posx, i );
+				Console.SetCursorPosition( x, i );
 				Console.Write( "s" );
 			}
 			for (int k = 0; k <= len; ++k)
 			{
-				Console.SetCursorPosition( (posx + len), k );
+				Console.SetCursorPosition( (x + len), k );
 				Console.Write( "s" );
 			}
 		}
-			
+
+
+
+		static void SnakeBody(int x , int y)	// функция тела змеи
+		{
+			Console.SetCursorPosition( (x+1), (y+1) );
+			Console.Write( "*" );
+		}
+																								
+
 	}
 }
