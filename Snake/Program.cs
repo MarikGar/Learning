@@ -14,31 +14,34 @@ namespace Snake
 			int len = int.Parse( Console.ReadLine() );
 			Console.Clear();
 			
-			
-
-
-
-
-			DrawHorizontal();
-			DrawVertical();
+			DrawHorizontal( posx, posy, len );		//
+			DrawVertical( posx, posy, len ); // вызываешь спараметров. я б тоже матерился
 			Console.WriteLine();
 			Console.ReadKey();
 
+			// вот теперь делай что хочешь, я пока посмотрю
+			//читай еще раз 4 главу сначала  внимательно: как задаются методы, и как они вызываются
 		}
-		void DrawHorizontal( int posx, int posy, int len )    // начало в x,y длиной len
+
+
+		// 3) какого хрена здесь нет пустых строк? эта другая функция, их надо разделять визуально
+		static void DrawHorizontal( int x, int y, int len )    // начало в x,y длиной len
 		{
-			for (int i = 0; i < len; ++i)
+			for (int i = 0; i < len; ++i)				
 			{
-				Console.SetCursorPosition( i, posy );
+				Console.SetCursorPosition( i, y );
 				Console.Write( "s" );
 			}
 			for (int p = 0; p < len; ++p)
 			{
-				Console.SetCursorPosition( p, (posy + len) );
+				Console.SetCursorPosition( p, (y + len) );
 				Console.Write( "s" );
 			}	  	  			
 		}
-		void DrawVertical( int posx, int posy, int len )
+
+
+		// то же самое
+		static void DrawVertical( int posx, int posy, int len )  // принимает 3 параметра
 		{
 			for (int i = 0; i < len; ++i)
 			{

@@ -95,21 +95,21 @@ namespace BullsAndCows
 
 		static string BullsToString( int bulls ) => NumberToString( bulls, "бык", "быка", "быков" );
 
-		static string NumberToString( int number, string one, string twoOrthreeOrfour , string other )
+		static string NumberToString( int number, string p1, string p2 , string p3 )
 		{
 			var c100 = number % 100;
 			if (10 <= c100 && c100 < 19)
-				return $"{number} {other}";
+				return $"{number} {p3}";
 			switch (c100 % 10)
 			{	
 				case 1:
-					return $"{number} {one}";
+					return $"{number} {p1}";
 				case 2:
 				case 3:
 				case 4:
-					return $"{number} {twoOrthreeOrfour}";
+					return $"{number} {p2}";
 				default :
-					return $"{number} {other}";
+					return $"{number} {p3}";
 			}	
 		}
 		#endregion

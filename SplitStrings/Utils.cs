@@ -51,9 +51,9 @@ namespace Learning
 		// возвращает случайную строку из digits цифр
 			// 4: 8715  5047  5324  5481  4634
 			// 5: 87599 73232 10478 31672 82475
-			public static string GetRandom( int digits )
+			public static string GetRandom( int DigitCount )
 		{
-			var min = ( int )Math.Pow( 10, digits - 1 );
+			var min = ( int )Math.Pow( 10, DigitCount - 1 );
 			var max = min * 10;
 			return _rnd.Next( min, max ).ToString();
 		}
