@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\SplitStrings\Utils.cs" Link="Utils.cs" />
+  </ItemGroup>
+
 </Project>
