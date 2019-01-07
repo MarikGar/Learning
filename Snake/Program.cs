@@ -100,8 +100,23 @@ namespace Snake
 			switch (key.Key)
 			{
 				// ПОЙМИ, что я тут делаю?
-				case ConsoleKey.LeftArrow: return UserKey.Left;
-				// дальше сам напиши. default: не нужен
+				case ConsoleKey.LeftArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
+					return UserKey.Left;
+				case ConsoleKey.RightArrow:	
+					// проверяет нажата ли кнопка в право
+					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
+					// если нажата то пишет что нажата кнопка в право 
+					return UserKey.Right;  // возвращает значение "Right" в функцию  ПроцесседМуви , для дальнейшего изменения координат
+				case ConsoleKey.UpArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
+					return UserKey.Up;
+				case ConsoleKey.DownArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
+					return UserKey.Down;
+				default:					 // прописал специально что бы прервать цикл
+					break;
+			// дальше сам напиши. default: не нужен
 			}
 
 			// чо тут сложного? что ты так долго тупишь над простой функцией?
