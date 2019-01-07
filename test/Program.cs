@@ -5,19 +5,30 @@ class Sample
 {
 	public static void Main()
 	{
-		ConsoleKeyInfo but;
-
-		do
+		ConsoleKeyInfo push;
+		while (Console.KeyAvailable == true)
 		{
-			Console.WriteLine( "Нажмите кнопку Escape, что бы выйти " );
-
-			
-
-			while (Console.KeyAvailable == false)
-				Thread.Sleep( 250 ); // Loop until input is entered.
-
-			but = Console.ReadKey( true );
-			Console.WriteLine( "Вы нажали  '{0}'", but.Key );
-		} while (but.Key != ConsoleKey.Escape);
+			push = Console.ReadKey( true );
+			switch (push.Key)
+			{
+				case ConsoleKey.UpArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+					break;
+				case ConsoleKey.DownArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+					Console.ReadKey();
+					break;
+				case ConsoleKey.LeftArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+					break;
+				case ConsoleKey.RightArrow:
+					Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+					break;
+				default:
+					Console.WriteLine( "Вы нажали не верную кнопку '{0}'", push.Key );
+					break;
+			}
+		}
+		Console.ReadKey();
 	}
 }

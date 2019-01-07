@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
+
 using Learning;
 
 namespace Snake
@@ -10,7 +12,14 @@ namespace Snake
 	class Program
 	{
 		const char Wall = '■';
-		
+
+		//const char SnakeHead = '☺';
+		//const char SnakeBodyq = '○';
+		//const char SnakeHead = '☻';
+		//const char SnakeBody = '●';
+		const char SnakeHead = '@';
+		const char SnakeBodyq = 'o';
+
 		// глобальные переменные
 		// чтобы не передавать их во все функции, где нужен размер поля
 		// мы их сделаем видимыми для всех функций
@@ -40,7 +49,11 @@ namespace Snake
 		static void Game( int width, int height )
 		{
 			Console.Clear();	  			
-			Console.CursorVisible = false;	 // мигающий курсор нам в игре не нужен
+			Console.CursorVisible = false;   // мигающий курсор нам в игре не нужен
+
+			_x = Width / 2;
+			_y = Height / 2;
+			_dx = _dy = 0;
 
 			DrawBox( width, height );
 
@@ -65,14 +78,20 @@ namespace Snake
 		{
 			// функция возвращает реузльтат (так было задумано) Юзерскую кнопку
 			// так присвой ее какойнить переменной
-			/*var key =*/ GetCurrentKey();
+			var key = GetCurrentKey();
 
 			// и выведи кнопку в консоль
 			// код надо отлаживать и писать так, чтобы видеть результат выполнения
-			Console.SetCursorPosition( Width + 5, Height / 2 );
+			//Console.SetCursorPosition( Width + 5, Height / 2 );
 			//Console.Write( $"{key}   " );
+			if (key != UserKey.None) Debug.Print( $"{DateTime.Now:HHmmss.fff} {key}\n" );
 
-			return true;
+			ControlSnake( key );
+			var snakeIsOk = MoveSnake();
+
+			DrawSnake();
+
+			return snakeIsOk;
 		}
 
 		// функция возвращает юзерскую клавишу. одну из списка констант UserKey
@@ -99,24 +118,10 @@ namespace Snake
 			// потому что функция была задумана для того, чтобы вернуть нажатую клавишу. НЕЕ?
 			switch (key.Key)
 			{
-				// ПОЙМИ, что я тут делаю?
-				case ConsoleKey.LeftArrow:
-					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
-					return UserKey.Left;
-				case ConsoleKey.RightArrow:	
-					// проверяет нажата ли кнопка в право
-					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
-					// если нажата то пишет что нажата кнопка в право 
-					return UserKey.Right;  // возвращает значение "Right" в функцию  ПроцесседМуви , для дальнейшего изменения координат
-				case ConsoleKey.UpArrow:
-					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
-					return UserKey.Up;
-				case ConsoleKey.DownArrow:
-					Console.WriteLine( "Вы нажали  '{0}'", key.Key );
-					return UserKey.Down;
-				default:					 // прописал специально что бы прервать цикл
-					break;
-			// дальше сам напиши. default: не нужен
+				case ConsoleKey.LeftArrow:	return UserKey.Left;
+				case ConsoleKey.RightArrow:	return UserKey.Right;
+				case ConsoleKey.UpArrow:	return UserKey.Up;
+				case ConsoleKey.DownArrow:	return UserKey.Down;
 			}
 
 			// чо тут сложного? что ты так долго тупишь над простой функцией?
@@ -125,6 +130,10 @@ namespace Snake
 			// есть дохуя где можно еще почитать про функции, ее параметры и возвращаемые значения
 			return UserKey.None;
 		}
+
+		static int _x, _y; // координаты головы Змеи
+		static int _dx, _dy; // это текущее направление движения
+
 		#endregion
 
 		#region Box drawing	
@@ -158,11 +167,32 @@ namespace Snake
 
 		#endregion
 
-		#region Snake drawing
-		static void SnakeBody( int x, int y )   // функция тела змеи   // это мнен для ориентира
+		#region Snake drawing & control
+
+		static void ControlSnake( UserKey userKey )
 		{
-				Console.SetCursorPosition( (x + 3), (y + 3) );
-				Console.Write( '☻' );
+			if (userKey == UserKey.None) return;
+
+			// а вот здесь в зависимости от клавиши ты бедшь менять текущее направление движения
+			// заметь, здесь не меняется позиция головы, она будет менять уже в другой функции
+
+			// менять dx,dy в зависимости от клавиши
+		}
+
+		static bool MoveSnake()
+		{
+			// вот здесь будет двигаться Змея
+			// менять x,y и проверить, заодно, чтобы не вышло за экраны
+
+			// если Змея врежется в экран, то игра заканивается и вернем false
+			return true;
+		}
+
+		static void DrawSnake()
+		{
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.SetCursorPosition( _x, _y );
+			Console.Write( SnakeHead );
 		}
 		#endregion
 	}
