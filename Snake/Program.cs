@@ -7,7 +7,7 @@ namespace Snake
 	class Program
 	{
 		const char Wall = '■';
-
+		enum push { None, Left, Up, Wright, Down };
 		// глобальные переменные
 		// чтобы не передавать их во все функции, где нужен размер поля
 		// мы их сделаем видимыми для всех функций
@@ -15,7 +15,7 @@ namespace Snake
 
 		// прочитай про параметры программы в 3ей главе
 		// не надо спрашивать у юзера больше ничо
-		public static void Main( string[] args ) 
+		public static void Main( string[] args )
 		{
 			Width = int.Parse( args != null && args.Length > 1 ? args[ 0 ] : "40" );
 			Height = int.Parse( args != null && args.Length > 2 ? args[ 1 ] : "20" );
@@ -26,7 +26,7 @@ namespace Snake
 			Game( Width, Height );
 
 			// поскольку юзер все равно проиграет, то выведем
-			Console.SetCursorPosition( 0, Height + 1 );
+			Console.SetCursorPosition( 0, Height + 1 );      // выставляет курсор в нужную позицию для выведения слова
 			Utils.Println( "Вы проиграли", ConsoleColor.Red );
 			Console.ReadKey();
 		}
@@ -47,18 +47,21 @@ namespace Snake
 			// каждый такт нам надо обрабатать клавиши, перерисовать змею
 			// и [может быть] появиться зайцам и яду
 			// потому что зайцы появляются не каждый такт, а 1 раз в 5 секунд, например
-			while (true)
+
+			// ConsoleKeyInfo push;
+			while (Console.KeyAvailable == true)
 			{
 				ProceedMoves();
 
-				// поскольку сюда надо передать миллисекунды
-				// и у нас есть заданный FPS, то разделим 100мс на FPS
-				Thread.Sleep( 1000 / FPS );
+
 			}
+			// поскольку сюда надо передать миллисекунды
+			// и у нас есть заданный FPS, то разделим 100мс на FPS
+			Thread.Sleep( 1000 / FPS );
+			#region Game logic
+
+	
 		}
-
-		#region Game logic
-
 		// это глобальная переменная
 		// она помнит свое состояние всегда
 		// мне нужна для текущего цвета, тебе не нужна и сможешь удалить
@@ -73,13 +76,42 @@ namespace Snake
 			// если такого цвет нет, то снова сбрасываем на 0
 			if (!hasColor) CurrColor = 0;
 			// ставим существующий цвет
-			Console.ForegroundColor = ( ConsoleColor )CurrColor;
+			Console.ForegroundColor = (ConsoleColor)CurrColor;
 			Console.Write( '☻' );
 		}
 
 		// функция вызывается каждый такт в Game-loop
+
+
+
 		static void ProceedMoves()
 		{
+			//SnakeBody( 0, 0 );
+			ConsoleKeyInfo push;
+			while (Console.KeyAvailable == true)
+			{
+				push = Console.ReadKey( true );
+				switch (push.Key)
+				{
+					case ConsoleKey.UpArrow:
+						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+						break;
+					case ConsoleKey.DownArrow:
+						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+						break;
+					case ConsoleKey.LeftArrow:
+						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+						break;
+					case ConsoleKey.RightArrow:
+						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
+						break;
+					default:
+						Console.WriteLine( "Вы нажали не верную кнопку '{0}'", push.Key );
+						break;
+				}
+			}
+
+
 			// я просто делаю мигающий смайл гдето за полем
 			ChangeSmile();
 
@@ -113,15 +145,20 @@ namespace Snake
 				Console.SetCursorPosition( x, i );
 				Console.Write( Wall );
 			}
-		}
-		#endregion
 
-		#region Snake drawing
+			#endregion
+		}
+			#region Snake drawing
 		static void SnakeBody( int x, int y )   // функция тела змеи   // это мнен для ориентира
 		{
-			Console.SetCursorPosition( (x + 3), (y + 3) );
-			Console.Write( "*" );
+				Console.SetCursorPosition( (x + 3), (y + 3) );
+				Console.Write( '☻' );
 		}
-		#endregion
+			#endregion
+		
+
+
+
 	}
 }
+
