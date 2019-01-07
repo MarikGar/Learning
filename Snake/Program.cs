@@ -4,12 +4,12 @@ using Learning;
 
 namespace Snake
 {
-	public enum UserKey { None, Left, Up, Wright, Down };
+	// право - это Right, не Wright
+	public enum UserKey { None, Left, Up, Right, Down };
 
 	class Program
 	{
 		const char Wall = '■';
-
 		
 		// глобальные переменные
 		// чтобы не передавать их во все функции, где нужен размер поля
@@ -50,51 +50,65 @@ namespace Snake
 			// и [может быть] появиться зайцам и яду
 			// потому что зайцы появляются не каждый такт, а 1 раз в 5 секунд, например
 
-			
-			while (true)
+			while (ProceedMoves())
 			{
-				ProceedMoves(); //Как правильно указать в параметрах получаемое значения нажатой кнопки ?????				   
+				// поскольку сюда надо передать миллисекунды
+				// и у нас есть заданный FPS, то разделим 100мс на FPS
+				Thread.Sleep( 1000 / FPS );
 			}
-			// поскольку сюда надо передать миллисекунды
-			// и у нас есть заданный FPS, то разделим 100мс на FPS
-			// Thread.Sleep( 1000 / FPS );	  		
 		}
-
 
 		#region Game logic
-
-		static void ProceedMoves()
+		// возвращает true, если надо продолжать игру
+		// иначе false, по которому завершаем Game-loop в Game()
+		static bool ProceedMoves()
 		{
-			GetCurrentKey();
+			// функция возвращает реузльтат (так было задумано) Юзерскую кнопку
+			// так присвой ее какойнить переменной
+			/*var key =*/ GetCurrentKey();
+
+			// и выведи кнопку в консоль
+			// код надо отлаживать и писать так, чтобы видеть результат выполнения
+			Console.SetCursorPosition( Width + 5, Height / 2 );
+			//Console.Write( $"{key}   " );
+
+			return true;
 		}
 
-		static void GetCurrentKey() // Как правильно указать в параметрах получаемое значения нажатой кнопки?????
+		// функция возвращает юзерскую клавишу. одну из списка констант UserKey
+		// что тут непонятного?
+		static UserKey GetCurrentKey()
 		{
-			var ButtomControl =  Enum.UserKey // получается я после присвоения вместо наименования кнопок могу вписывать просто ButtomControl?
-			ConsoleKeyInfo push;
-			while (Console.KeyAvailable)
+			// если ничо не нажато, то так и выдаем - None
+			if (!Console.KeyAvailable) return UserKey.None;
+			// воклицательный знак означает НЕ. читай про унарные операторы
+			// и все условие звучит как "если клавиша НЕ доступна, то ..."
+
+			// здесь какието клавиши лежат в буфере
+			// их надо все забрать из буфера и по последней выдать результат
+			ConsoleKeyInfo key; // было название "push" - еще раз тупое название для клавиши
+			do key = Console.ReadKey( true );
+			while (Console.KeyAvailable);
+			// пока клавиши доступны в буфере консоли, вытаскиваем их по одной в key
+			// ВСЁ. вот такой простой тупой цикл
+			// озвучь по-русски, что надо сделать и сделай
+			// почитай про метод Резиновой уточки в википедии
+
+			// теперь key содержит последюю клавишу
+			// по ней и вернем из функции результат
+			// потому что функция была задумана для того, чтобы вернуть нажатую клавишу. НЕЕ?
+			switch (key.Key)
 			{
-				push = Console.ReadKey( true );
-				switch (push.Key)
-				{
-					case ConsoleKey.UpArrow:
-						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
-						break;
-					case ConsoleKey.DownArrow:
-						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
-						break;
-					case ConsoleKey.LeftArrow:
-						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
-						break;
-					case ConsoleKey.RightArrow:
-						Console.WriteLine( "Вы нажали  '{0}'", push.Key );
-						break;
-					default:
-						Console.WriteLine( "Вы нажали не верную кнопку '{0}'", push.Key );
-						break;
-				}
-			}  				
-			
+				// ПОЙМИ, что я тут делаю?
+				case ConsoleKey.LeftArrow: return UserKey.Left;
+				// дальше сам напиши. default: не нужен
+			}
+
+			// чо тут сложного? что ты так долго тупишь над простой функцией?
+			// непонятно, читай про функции еще раз.. в других источниках.. 
+			// не надо книжку до дыр зачитывать, если в ней тебе непонятна тема
+			// есть дохуя где можно еще почитать про функции, ее параметры и возвращаемые значения
+			return UserKey.None;
 		}
 		#endregion
 
@@ -136,10 +150,6 @@ namespace Snake
 				Console.Write( '☻' );
 		}
 		#endregion
-
-
-		
-
 	}
 }
 
