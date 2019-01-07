@@ -4,10 +4,13 @@ using Learning;
 
 namespace Snake
 {
+	public enum UserKey { None, Left, Up, Wright, Down };
+
 	class Program
 	{
 		const char Wall = '■';
-		enum push { None, Left, Up, Wright, Down };
+
+		
 		// глобальные переменные
 		// чтобы не передавать их во все функции, где нужен размер поля
 		// мы их сделаем видимыми для всех функций
@@ -36,9 +39,8 @@ namespace Snake
 
 		static void Game( int width, int height )
 		{
-			Console.Clear();
-			// мигающий курсор нам в игре не нужен
-			Console.CursorVisible = false;
+			Console.Clear();	  			
+			Console.CursorVisible = false;	 // мигающий курсор нам в игре не нужен
 
 			DrawBox( width, height );
 
@@ -48,47 +50,29 @@ namespace Snake
 			// и [может быть] появиться зайцам и яду
 			// потому что зайцы появляются не каждый такт, а 1 раз в 5 секунд, например
 
-			// ConsoleKeyInfo push;
-			while (Console.KeyAvailable == true)
+			
+			while (true)
 			{
-				ProceedMoves();
-
-
+				ProceedMoves(); //Как правильно указать в параметрах получаемое значения нажатой кнопки ?????				   
 			}
 			// поскольку сюда надо передать миллисекунды
 			// и у нас есть заданный FPS, то разделим 100мс на FPS
-			Thread.Sleep( 1000 / FPS );
-			#region Game logic
-
-	
-		}
-		// это глобальная переменная
-		// она помнит свое состояние всегда
-		// мне нужна для текущего цвета, тебе не нужна и сможешь удалить
-		static int CurrColor = 0;
-
-		// рисует смайл за полем
-		static void ChangeSmile()
-		{
-			Console.SetCursorPosition( Width + 5, Height / 2 );
-			// убеждаюсь, что цвет есть
-			var hasColor = Enum.IsDefined( typeof( ConsoleColor ), ++CurrColor );
-			// если такого цвет нет, то снова сбрасываем на 0
-			if (!hasColor) CurrColor = 0;
-			// ставим существующий цвет
-			Console.ForegroundColor = (ConsoleColor)CurrColor;
-			Console.Write( '☻' );
+			// Thread.Sleep( 1000 / FPS );	  		
 		}
 
-		// функция вызывается каждый такт в Game-loop
 
-
+		#region Game logic
 
 		static void ProceedMoves()
 		{
-			//SnakeBody( 0, 0 );
+			GetCurrentKey();
+		}
+
+		static void GetCurrentKey() // Как правильно указать в параметрах получаемое значения нажатой кнопки?????
+		{
+			var ButtomControl =  Enum.UserKey // получается я после присвоения вместо наименования кнопок могу вписывать просто ButtomControl?
 			ConsoleKeyInfo push;
-			while (Console.KeyAvailable == true)
+			while (Console.KeyAvailable)
 			{
 				push = Console.ReadKey( true );
 				switch (push.Key)
@@ -109,17 +93,12 @@ namespace Snake
 						Console.WriteLine( "Вы нажали не верную кнопку '{0}'", push.Key );
 						break;
 				}
-			}
-
-
-			// я просто делаю мигающий смайл гдето за полем
-			ChangeSmile();
-
-			// тебе же надо будет обрабатывать клавиши и двигать Змею
+			}  				
+			
 		}
 		#endregion
 
-		#region Box drawing									 
+		#region Box drawing	
 		static void DrawBox( int width, int height )
 		{
 			Console.ForegroundColor = ConsoleColor.Cyan;
@@ -146,18 +125,20 @@ namespace Snake
 				Console.Write( Wall );
 			}
 
-			#endregion
 		}
-			#region Snake drawing
+
+		#endregion
+
+		#region Snake drawing
 		static void SnakeBody( int x, int y )   // функция тела змеи   // это мнен для ориентира
 		{
 				Console.SetCursorPosition( (x + 3), (y + 3) );
 				Console.Write( '☻' );
 		}
-			#endregion
+		#endregion
+
+
 		
-
-
 
 	}
 }
