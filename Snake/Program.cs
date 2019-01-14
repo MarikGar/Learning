@@ -48,7 +48,7 @@ namespace Snake
 
 		static void Game( int width, int height )
 		{
-			Console.Clear();	  			
+			Console.Clear();
 			Console.CursorVisible = false;   // мигающий курсор нам в игре не нужен
 
 			_x = Width / 2;
@@ -118,10 +118,10 @@ namespace Snake
 			// потому что функция была задумана для того, чтобы вернуть нажатую клавишу. НЕЕ?
 			switch (key.Key)
 			{
-				case ConsoleKey.LeftArrow:	return UserKey.Left;
-				case ConsoleKey.RightArrow:	return UserKey.Right;
-				case ConsoleKey.UpArrow:	return UserKey.Up;
-				case ConsoleKey.DownArrow:	return UserKey.Down;
+				case ConsoleKey.LeftArrow: return UserKey.Left;
+				case ConsoleKey.RightArrow: return UserKey.Right;
+				case ConsoleKey.UpArrow: return UserKey.Up;
+				case ConsoleKey.DownArrow: return UserKey.Down;
 			}
 
 			// чо тут сложного? что ты так долго тупишь над простой функцией?
@@ -171,8 +171,16 @@ namespace Snake
 
 		static void ControlSnake( UserKey userKey )
 		{
-			if (userKey == UserKey.None) return;
-
+			Utils.Println( "  ", ConsoleColor.Black ) ;
+			if (userKey == UserKey.None) return;  			
+			_dx = _dy = 0;
+			switch (userKey)
+			{
+				case UserKey.Left: _dx = -1; return;   					
+				case UserKey.Right:	_dx = 1; return;
+				case UserKey.Up: _dy = -1;  return;
+				case UserKey.Down: _dy = 1; return;
+			}
 			// а вот здесь в зависимости от клавиши ты бедшь менять текущее направление движения
 			// заметь, здесь не меняется позиция головы, она будет менять уже в другой функции
 
@@ -180,7 +188,11 @@ namespace Snake
 		}
 
 		static bool MoveSnake()
-		{
+		{	  			
+			_x = _x +_dx;
+			_y = _y +_dy;
+			//Console.WriteLine($"{_dx} ", _dx);
+			//Console.WriteLine( $"{_dy}", _dy );
 			// вот здесь будет двигаться Змея
 			// менять x,y и проверить, заодно, чтобы не вышло за экраны
 
