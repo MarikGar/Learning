@@ -131,8 +131,6 @@ namespace Snake
 			return UserKey.None;
 		}
 
-		static int _x, _y; // координаты головы Змеи
-		static int _dx, _dy; // это текущее направление движения
 
 		#endregion
 
@@ -167,18 +165,21 @@ namespace Snake
 
 		#endregion
 
-		#region Snake drawing & control
+
+		#region Snake drawing & control		
+
+		static int _x, _y; // координаты головы Змеи
+		static int _dx, _dy; // это текущее направление движения
 
 		static void ControlSnake( UserKey userKey )
 		{
-			Utils.Println( "  ", ConsoleColor.Black ) ;
-			if (userKey == UserKey.None) return;  			
+			if (userKey == UserKey.None) return;
 			_dx = _dy = 0;
 			switch (userKey)
 			{
-				case UserKey.Left: _dx = -1; return;   					
-				case UserKey.Right:	_dx = 1; return;
-				case UserKey.Up: _dy = -1;  return;
+				case UserKey.Left: _dx = -1; return;
+				case UserKey.Right: _dx = 1; return;
+				case UserKey.Up: _dy = -1; return;
 				case UserKey.Down: _dy = 1; return;
 			}
 			// а вот здесь в зависимости от клавиши ты бедшь менять текущее направление движения
@@ -188,9 +189,9 @@ namespace Snake
 		}
 
 		static bool MoveSnake()
-		{	  			
-			_x = _x +_dx;
-			_y = _y +_dy;
+		{
+			_x = _x + _dx;
+			_y = _y + _dy;
 			//Console.WriteLine($"{_dx} ", _dx);
 			//Console.WriteLine( $"{_dy}", _dy );
 			// вот здесь будет двигаться Змея
@@ -202,6 +203,9 @@ namespace Snake
 
 		static void DrawSnake()
 		{
+			Console.SetCursorPosition( _x - _dx, _y - _dy );
+			Console.Write( ' ' );
+
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.SetCursorPosition( _x, _y );
 			Console.Write( SnakeHead );
