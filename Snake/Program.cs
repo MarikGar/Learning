@@ -53,6 +53,10 @@ namespace Snake
 
 			_x = Width / 2;
 			_y = Height / 2;
+			_dy = Height / 2;
+			_dx = Width / 2 - 1;
+			_cx = Width / 2 - 2;
+			_cy = Height / 2;
 			_dx = _dy = 0;
 
 			DrawBox( width, height );
@@ -170,12 +174,12 @@ namespace Snake
 
 		static int _x, _y; // координаты головы Змеи
 		static int _bx, _by; // координаты 1 клетки тела 
+		static int _cx, _cy;
+		static int _ox, _oy;
 		static int _dx, _dy; // это текущее направление движения
 
 		static void ControlSnake( UserKey userKey )
-		{
-			Console.SetCursorPosition( _bx - _dx, _by - _dy ); ;
-			Console.Write( ' ' );
+		{	   			
 			if (userKey == UserKey.None) return;
 			_dx = _dy = 0;
 			switch (userKey)
@@ -193,8 +197,10 @@ namespace Snake
 
 		static bool MoveSnake()
 		{
-			Console.SetCursorPosition( _bx , _by ); 
-			Console.Write( ' ' );
+			_ox = _cx;
+			_oy = _cy;
+			_cy = _by;
+			_cx = _bx;
 			_bx = _x;
 			_by = _y;
 			_x = _x + _dx;
@@ -208,12 +214,17 @@ namespace Snake
 		}
 
 		static void DrawSnake()
-		{	 				   
+		{
+			Console.SetCursorPosition( _ox , _oy  );
+			Console.Write( ' ' );
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.SetCursorPosition( _x, _y );
 			Console.Write( SnakeHead );
 			Console.SetCursorPosition( _bx, _by );
+			Console.Write( SnakeBody);
+			Console.SetCursorPosition( _cx, _cy );
 			Console.Write( SnakeBody );
+
 		}
 		#endregion
 	}
