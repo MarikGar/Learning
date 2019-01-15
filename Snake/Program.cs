@@ -18,7 +18,7 @@ namespace Snake
 		//const char SnakeHead = '☻';
 		//const char SnakeBody = '●';
 		const char SnakeHead = '@';
-		const char SnakeBodyq = 'o';
+		const char SnakeBody = 'o';
 
 		// глобальные переменные
 		// чтобы не передавать их во все функции, где нужен размер поля
@@ -169,10 +169,13 @@ namespace Snake
 		#region Snake drawing & control		
 
 		static int _x, _y; // координаты головы Змеи
+		static int _bx, _by; // координаты 1 клетки тела 
 		static int _dx, _dy; // это текущее направление движения
 
 		static void ControlSnake( UserKey userKey )
 		{
+			Console.SetCursorPosition( _bx - _dx, _by - _dy ); ;
+			Console.Write( ' ' );
 			if (userKey == UserKey.None) return;
 			_dx = _dy = 0;
 			switch (userKey)
@@ -190,10 +193,13 @@ namespace Snake
 
 		static bool MoveSnake()
 		{
+			Console.SetCursorPosition( _bx , _by ); 
+			Console.Write( ' ' );
+			_bx = _x;
+			_by = _y;
 			_x = _x + _dx;
-			_y = _y + _dy;
-			//Console.WriteLine($"{_dx} ", _dx);
-			//Console.WriteLine( $"{_dy}", _dy );
+			_y = _y + _dy;	  			
+			 		
 			// вот здесь будет двигаться Змея
 			// менять x,y и проверить, заодно, чтобы не вышло за экраны
 
@@ -202,13 +208,12 @@ namespace Snake
 		}
 
 		static void DrawSnake()
-		{
-			Console.SetCursorPosition( _x - _dx, _y - _dy );
-			Console.Write( ' ' );
-
+		{	 				   
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.SetCursorPosition( _x, _y );
 			Console.Write( SnakeHead );
+			Console.SetCursorPosition( _bx, _by );
+			Console.Write( SnakeBody );
 		}
 		#endregion
 	}
