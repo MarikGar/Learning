@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitStrings", "SplitString
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullsAndCows", "BullsAndCows\BullsAndCows.csproj", "{244C100F-9978-44F5-8C72-9A9DC5226F67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snake", "Snake\Snake.csproj", "{F8590128-8BD9-453E-B23A-DD23D84F4F58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snake", "Snake\Snake.csproj", "{436E8D73-A036-4652-B163-940C6FB3934F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{DF459241-D156-496F-A04E-A2C7D8361E1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "test", "test\test.csproj", "{DF459241-D156-496F-A04E-A2C7D8361E1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,10 @@ Global
 		{244C100F-9978-44F5-8C72-9A9DC5226F67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{244C100F-9978-44F5-8C72-9A9DC5226F67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{244C100F-9978-44F5-8C72-9A9DC5226F67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8590128-8BD9-453E-B23A-DD23D84F4F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8590128-8BD9-453E-B23A-DD23D84F4F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8590128-8BD9-453E-B23A-DD23D84F4F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8590128-8BD9-453E-B23A-DD23D84F4F58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436E8D73-A036-4652-B163-940C6FB3934F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436E8D73-A036-4652-B163-940C6FB3934F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436E8D73-A036-4652-B163-940C6FB3934F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436E8D73-A036-4652-B163-940C6FB3934F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DF459241-D156-496F-A04E-A2C7D8361E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF459241-D156-496F-A04E-A2C7D8361E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF459241-D156-496F-A04E-A2C7D8361E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
