@@ -44,7 +44,7 @@ namespace Snake
 		}
 
 		// Frame per Second
-		const int FPS = 3; // 3 раза в секунду обрабатывать змею
+		const int FPS = 4; // 4 раза в секунду обрабатывать змею
 
 		static void Game( int width, int height )
 		{
