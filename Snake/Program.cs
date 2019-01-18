@@ -291,9 +291,3 @@ namespace Snake
 	}
 }
 
-struct Coordin
-{
-	public int X;
-	public int Y;
-	public 
-}
