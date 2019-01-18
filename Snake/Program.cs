@@ -204,7 +204,7 @@ namespace Snake
 		{
 			// если змея не двигается, то ничего и не делаем
 			if (_dx == 0 && _dy == 0) return true;
-
+			
 			_ox = _cx;
 			_oy = _cy;
 
@@ -218,8 +218,8 @@ namespace Snake
 			_y = _y + _dy;
 
 			if (_x ==Width  || _y ==Height  || _x == 0 || _y == 0) return false;
-				
-			 		
+			if (_x == _cx && _y == _cy) return false;
+
 			// вот здесь будет двигаться Змея
 			// менять x,y и проверить, заодно, чтобы не вышло за экраны
 
