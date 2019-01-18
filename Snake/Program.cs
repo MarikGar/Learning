@@ -51,19 +51,11 @@ namespace Snake
 			Console.Clear();
 			Console.CursorVisible = false;   // мигающий курсор нам в игре не нужен
 
-			// по горизонтали: голова Змеи в среднем столбце, тело тоже, идет вниз
-			_x = _bx = _cx = Width / 2;
-			// по вертикали: голова Змеи по центру
-			_y = Height / 2;
-			_dy = _dy = 0;
-			// по вертикали: а тело на 1,2 клетки ниже
-			_by = _y + 1;
-			_cy = _by + 1;
-			// старая клетка пока стоит пусть в Голове. чтобы не затирала границу в (0,0)
-			_ox = _x;
-			_oy = _y;
-
+			// нарисуем границу
 			DrawBox( width, height );
+
+			// вот теперь понятно и кратко и пистато
+			SetupSnake();
 
 			// Game-loop
 			// это игровой цикл, в котором будут такты
@@ -176,23 +168,43 @@ namespace Snake
 		#region Snake drawing & control		
 
 		// это связанные друг с другом переменные. держи их вместе
-		static int _x, _y; // координаты головы Змеи
-		static int _dx, _dy; // это текущее направление движения
+		static Coord _head; // координаты головы Змеи (Head)
+		static Coord _ofs; // это текущее направление движения (Offset)
 
-		static int _bx, _by; // координаты 1 клетки тела 
-		static int _cx, _cy;
-		static int _ox, _oy;
+		static Coord _b1; // координаты 1 клетки тела 
+		static Coord _b2;
+		static Coord _old;
+
+		// слишком много кода для настройки Змеи
+		// потому выделим его в отдельный метод, чтобы не засорял наше и так мутное сознание
+		// когда мы читаем код в методе Game
+		static void SetupSnake()
+		{
+			// установим Змею в первоначальное положение по центру Границ
+			// по горизонтали: голова Змеи в среднем столбце, тело тоже, идет вниз
+			// юзаем конструктор по 2м координатам
+			_head = new Coord( Width / 2, Height / 2 ); // по центру
+			_ofs = Coord.Zero;
+			// по вертикали: а тело на 1 клетку ниже
+			_b1 = _head; // здесь присваиваем _head
+			++_b1.Y; // а здесь делаем на 1летку ниже (увеличивае Y)
+					 // 2ая клетка еще на 1 клутку ниже
+			_b2 = _b1;
+			++_b2.Y;
+			// чтобы не затирала границу в (0,0)
+			_old = _head;
+		}
 
 		static void ControlSnake( UserKey userKey )
 		{	   			
 			if (userKey == UserKey.None) return;
-			_dx = _dy = 0;
+			_ofs = Coord.Zero;
 			switch (userKey)
 			{
-				case UserKey.Left: _dx = -1; return;
-				case UserKey.Right: _dx = 1; return;
-				case UserKey.Up: _dy = -1; return;
-				case UserKey.Down: _dy = 1; return;
+				case UserKey.Left: _ofs = -Coord.UnitX; return; // красиво, но навен малопнятно для темных )
+				case UserKey.Right: _ofs = Coord.UnitX; return;
+				case UserKey.Up: _ofs = -Coord.UnitY; return; // юзается оператор -(Coord)
+				case UserKey.Down: _ofs = Coord.UnitY; return;
 			}
 			// а вот здесь в зависимости от клавиши ты бедшь менять текущее направление движения
 			// заметь, здесь не меняется позиция головы, она будет менять уже в другой функции
@@ -203,22 +215,22 @@ namespace Snake
 		static bool MoveSnake()
 		{
 			// если змея не двигается, то ничего и не делаем
-			if (_dx == 0 && _dy == 0) return true;
-			
-			_ox = _cx;
-			_oy = _cy;
+			if (_ofs == Coord.Zero) return true;
 
-			_cy = _by;
-			_cx = _bx;
+			// гораздо меньше кода и вроде как понятнее
+			// если ты всюду будешь таскать x,y или двустрочные массивы, то мы тя первыми сдадим в дурку
+			// а потому что ты сам от своих путаниц сойдешь с ума, а не по другйо причине
+			_old = _b2;
+			_b2 = _b1;
+			_b1 = _head;
+			_head += _ofs;
 
-			_bx = _x;
-			_by = _y;
+			// код длиньше, но из него поянятно, что сравниваем чото для головы _head
+			if (_head.X == Width || _head.Y == Height || _head.X == 0 || _head.Y == 0) return false;
 
-			_x = _x + _dx;
-			_y = _y + _dy;
-
-			if (_x ==Width  || _y ==Height  || _x == 0 || _y == 0) return false;
-			if (_x == _cx && _y == _cy) return false;
+			// здесь условие изменится, потому что надо будет сранвивать не со 2ой клеткой
+			// а ваще с любой из тела (но пока оставим почти как есть)
+			if (_head == _b2) return false;
 
 			// вот здесь будет двигаться Змея
 			// менять x,y и проверить, заодно, чтобы не вышло за экраны
@@ -229,19 +241,26 @@ namespace Snake
 
 		static void DrawSnake()
 		{
-			Console.SetCursorPosition( _ox , _oy  );
+			// было Console.SetCursorPosition( _ox , _oy  );
+			// стало
+			SetCursor( _old );
 			Console.Write( ' ' );
 
 			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.SetCursorPosition( _x, _y );
+			SetCursor( _head );
 			Console.Write( SnakeHead );
 
-			Console.SetCursorPosition( _bx, _by );
+			SetCursor( _b1 );
 			Console.Write( SnakeBody);
 
-			Console.SetCursorPosition( _cx, _cy );
+			SetCursor( _b2 );
 			Console.Write( SnakeBody );
 		}
+		#endregion
+
+		#region всяко-разно
+		// добавим метод для позиционирования по Coord
+		static void SetCursor( Coord v ) => Console.SetCursorPosition( v.X, v.Y );
 		#endregion
 	}
 }

@@ -19,6 +19,10 @@ namespace Learning
 		// сразу понятно с чем сраниваем и не ошибемся в написании Coord( 0, 9 ) случайно
 		public static readonly Coord Zero = new Coord();
 
+		// добавим Кооррдинаты осей
+		public static readonly Coord UnitX = new Coord( 1, 0 ); // x=1, y=0. Ось OX
+		public static readonly Coord UnitY = new Coord( 0, 1 ); // x=0, y=1. Ось OY
+
 		// мы собираемся складывать координаты, поэтому добавим оператор сложения
 		// он же будет использоваться и для операции +=
 		// УХТЫ (мыВышлиИзБухты) 
