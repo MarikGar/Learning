@@ -16,12 +16,12 @@ namespace Learning
 
 			// даем переменным нормальные названия, чтобы сразу было понятно, что это за хрень
 			var oldColor = Console.ForegroundColor;
-			
+
 			// установим желтый цвет для приглашения
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			// вводить будем на этой же строке, потому просто Write, не WriteLine
 			Console.Write( text + ": " );
-			
+
 			// зеленый для юзерского ввода
 			Console.ForegroundColor = ConsoleColor.Green;
 			var res = Console.ReadLine();
@@ -49,14 +49,28 @@ namespace Learning
 		}
 
 		// возвращает случайную строку из digits цифр
-			// 4: 8715  5047  5324  5481  4634
-			// 5: 87599 73232 10478 31672 82475
-			public static string GetRandom( int DigitCount )
+		// 4: 8715  5047  5324  5481  4634
+		// 5: 87599 73232 10478 31672 82475
+		public static string GetRandom( int DigitCount )
 		{
-			var min = ( int )Math.Pow( 10, DigitCount - 1 );
+			var min = (int)Math.Pow( 10, DigitCount - 1 );
 			var max = min * 10;
 			return _rnd.Next( min, max ).ToString();
 		}
 		static readonly Random _rnd = new Random();
+
+		public static void MethodOleg()	  // сдвиг элементов на лево
+		{
+			var arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			int last, next, i;
+			last = arr[ 0 ]; 
+			if (i = 0; i < arr.Length -1; i++)
+			{
+				arr[ i ] = arr[ i + 1 ];
+			}
+			arr[ arr.Length - 1 ] = last;
+			Console.WriteLine( arr[] );	
+		}
+
 	}
 }
