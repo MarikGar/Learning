@@ -59,18 +59,14 @@ namespace Learning
 		}
 		static readonly Random _rnd = new Random();
 
-		public static void MethodOleg()	  // сдвиг элементов на лево
+		public static void ArrayShiftLeft( int[] arr )
 		{
-			var arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-			int last, next, i;
-			last = arr[ 0 ]; 
-			if (i = 0; i < arr.Length -1; i++)
-			{
+			int last = arr[ 0 ];									   
+			for (int i = 0; i < arr.Length - 1; i++)
 				arr[ i ] = arr[ i + 1 ];
-			}
 			arr[ arr.Length - 1 ] = last;
-			Console.WriteLine( arr[] );	
 		}
+		
 
 	}
 }
