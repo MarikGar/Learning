@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Learning;
 
 class Test
 {
-	static void PrintArray( int[] arr, string title )
+	static void PrintArray<T>( T[] arr, string title )
 	{
 		Console.WriteLine( title );
 		// чтобы распечатать массив, надо вывести каждый элемент с разделителем
@@ -18,6 +19,14 @@ class Test
 		Console.WriteLine();
 	}
 
+	static void PrintList<T>( List<T> list, string title )
+	{
+		Console.WriteLine( title );
+		string dim = "";
+		foreach (var el in list) { Console.Write( $"{dim}{el}" ); dim = ", "; }
+		Console.WriteLine();
+	}
+
 	static void testShifts()
 	{
 		var arr = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -28,9 +37,19 @@ class Test
 		Utils.ArrayShiftLeft( tmp );
 		PrintArray( tmp, "AFTER" );
 
-		// оно работает я вижу
-		// но послежний элемент 9, я делал что бы был превый
-		// зациливание для нас не нужно, но можешь сделать чтобы он был первымпис
+		// один шаблонный метод работает с любыми данными. КРУТО. не надо писать 20 дебилных одинаковых методов
+		Console.WriteLine();
+		var dbl = new double[] { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 };
+		PrintArray( dbl, "BEFORE" );
+		Utils.ArrayShiftLeft( dbl );
+		PrintArray( dbl, "AFTER" );
+
+		// проверим, что листо тож сдвигает
+		Console.WriteLine();
+		var list = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		PrintList( list, "BEFORE" );
+		Utils.ListShiftLeft( list );
+		PrintList( list, "AFTER" );
 
 		// test ArrayShiftRight
 		// test ListShiftLeft

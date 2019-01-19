@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic; // Generic - переводится как шаблон. в этом неймспейсе находится List<T>
 
 namespace Learning
 {
@@ -59,14 +60,40 @@ namespace Learning
 		}
 		static readonly Random _rnd = new Random();
 
-		public static void ArrayShiftLeft( int[] arr )
+		#region Shifts
+		public static void ArrayShiftLeft <T> ( T[] arr )
 		{
-			int last = arr[ 0 ];									   
+			var last = arr[ 0 ];
 			for (int i = 0; i < arr.Length - 1; i++)
 				arr[ i ] = arr[ i + 1 ];
 			arr[ arr.Length - 1 ] = last;
 		}
-		
 
+		public static void ArrayShiftRight<T>( T[] arr )
+		{
+			// исправь чтобы сдвигал вправо
+			var last = arr[ 0 ];
+			for (int i = 0; i < arr.Length - 1; i++)
+				arr[ i ] = arr[ i + 1 ];
+			arr[ arr.Length - 1 ] = last;
+		}
+
+		public static void ListShiftLeft<T>( List<T> list )
+		{
+			var last = list[ 0 ];
+			for (int i = 0; i < list.Count - 1; i++)
+				list[ i ] = list[ i + 1 ];
+			list[ list.Count - 1 ] = last;
+		}
+
+		public static void ListShiftRight<T>( List<T> list ) // для переименования жмем Ctrl+R
+		{
+			// исправь чтобы сдвигал вправо
+			var last = list[ 0 ];
+			for (int i = 0; i < list.Count - 1; i++)
+				list[ i ] = list[ i + 1 ];
+			list[ list.Count - 1 ] = last;
+		}
+		#endregion
 	}
 }
