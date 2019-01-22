@@ -20,6 +20,7 @@ namespace Snake
 		//const char SnakeBody = '●';
 		const char SnakeHead = '@';
 		const char SnakeBody = 'o';
+		const char Food = '$';
 
 		// глобальные переменные
 		// чтобы не передавать их во все функции, где нужен размер поля
@@ -58,6 +59,8 @@ namespace Snake
 			// вот теперь понятно и кратко и пистато
 			SetupSnake();
 
+			SetupFood();
+
 			// Game-loop
 			// это игровой цикл, в котором будут такты
 			// каждый такт нам надо обрабатать клавиши, перерисовать змею
@@ -91,6 +94,7 @@ namespace Snake
 			var snakeIsOk = MoveSnake();
 
 			DrawSnake();
+			DrawFood();
 
 			return snakeIsOk;
 		}
@@ -245,12 +249,23 @@ namespace Snake
 
 			// здесь условие изменится, потому что надо будет сранвивать не со 2ой клеткой
 			// а ваще с любой из тела (но пока оставим почти как есть)
-			if (head == _snake[ 2 ]) return false; // оставим [2], иначе заипемся
+			// поскольку нас теперь змея длинная в списке, то надо проверить со всем списком (кроме самой головы)
+			// если голова встречается в позиции отличной от головы, значит мы пересекли себя же
+			if (_snake.IndexOf( head, 1 ) >= 0) return false;
+			// почему 1, понимаю голова , а один?
+			// потому что голова в [0], а проверить надо со всем остальным телом, которое начинается с 1
 
-			// вот здесь будет двигаться Змея
-			// менять x,y и проверить, заодно, чтобы не вышло за экраны
+			// а теперь проверим с кроликом
+			if (IsFoodEaten)
+			{
+				// старую еду надо убрать
+				// установить новую
+				SetupFood(); // этим мы сделали и убрали и установили сразу
 
-			// если Змея врежется в экран, то игра заканивается и вернем false
+				// и увеличить змею (это тебе)
+				//TODO
+			}
+
 			return true;
 		}
 
@@ -274,6 +289,34 @@ namespace Snake
 			// а вот голову уже нарисовать в новой [0]
 			SetCursor( _snake.FirstItem() );
 			Console.Write( SnakeHead );
+		}
+		#endregion
+
+		#region food (кролик)
+		// позиция кролика-еды
+		static Coord _food;
+
+		static void SetupFood()
+		{
+			// поскольку у нас уже есть Random в utils, его и заюзаем, а значит добавим туда новый метод
+			// от 1 включительно до Width/Height исключительно - тем самым кролика ставим уже точн)
+			for (_food = new Coord( Utils.NextRandom( 1, Width ), Utils.NextRandom( 1, Height )); 
+				// если в Змее нашлась такая же точка, то результат будет Индекс, который >= 0
+				// если не нашлоась, то Индекс будет -1
+				// повторяем цикл, пока точка в змее
+				_snake.IndexOf( _food ) >= 0;
+				_food = new Coord( Utils.NextRandom( 1, Width ), Utils.NextRandom( 1, Height )))
+			{
+			}
+		}
+
+		static bool IsFoodEaten => _food == _snake.FirstItem();
+
+		static void DrawFood()
+		{
+			Console.ForegroundColor = ConsoleColor.Green;
+			SetCursor( _food );
+			Console.Write( Food );
 		}
 		#endregion
 

@@ -4,7 +4,7 @@ using System.Collections.Generic; // Generic - переводится как ш�
 namespace Learning
 {
 	// класс всяких утилиток/методов
-	public static class  Utils
+	public static class Utils
 	{
 		#region input & output
 		// поскольку запрос строки у юзера не такая уж уникальная операция 
@@ -62,6 +62,11 @@ namespace Learning
 			return _rnd.Next( min, max ).ToString();
 		}
 		static readonly Random _rnd = new Random();
+
+		public static int NextRandom( int low, int high )
+		{
+			return _rnd.Next( low, high );
+		}
 		#endregion
 
 		#region Shifts
@@ -75,7 +80,6 @@ namespace Learning
 
 		public static void ArrayShiftRight<T>( T[] arr )
 		{
-			// исправь чтобы сдвигал вправо
 			var first = arr[ (arr.Length-1) ];
 			for (int i = (arr.Length-1); i > 0; i--)
 				arr[ i ] = arr[ i-1 ];
@@ -91,7 +95,6 @@ namespace Learning
 
 		public static void ListShiftRight<T>( List<T> list ) // для переименования жмем Ctrl+R
 		{
-			// исправь чтобы сдвигал вправо
 			var first = list[ list.Count-1 ];
 			for (int i = (list.Count - 1); i > 0; i--)
 				list[ i ] = list[ i - 1 ];
