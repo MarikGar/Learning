@@ -262,12 +262,21 @@ namespace Snake
 				// установить новую
 				SetupFood(); // этим мы сделали и убрали и установили сразу
 
-				// и увеличить змею (это тебе)
-				//TODO
+				_inc += 3;
+			}
+
+			if (_inc > 0) // ты уже здесь вычел 1
+			{
+				_snake.Add( _old );
+				_old.X = Width + 2; // вне поля
+				_inc = _inc - 1; // пиши как тебе понятнее
+				// --x это то же что и x-=1 а это то же что и x=x-1
 			}
 
 			return true;
 		}
+
+		static int _inc;
 
 		static void DrawSnake()
 		{
@@ -289,6 +298,15 @@ namespace Snake
 			// а вот голову уже нарисовать в новой [0]
 			SetCursor( _snake.FirstItem() );
 			Console.Write( SnakeHead );
+
+			// выведи длину змеи здесь
+			Console.SetCursorPosition( Width + 7, Height / 2 );
+			// либо создание любого объекта проиходит через new и конструктор		
+			SetCursor( new Coord( Width + 7, Height / 2 ) );
+			// я сговорил в цвете используя Utils.? o
+			Utils.Print( $"Длина={_snake.Count}", ConsoleColor.Magenta );
+			//Utils.Print( _snake.Count.ToString(), ConsoleColor.Magenta );
+			// изучи вопрос как преобразовывать любые значения в строку
 		}
 		#endregion
 
@@ -323,6 +341,7 @@ namespace Snake
 		#region всяко-разно
 		// добавим метод для позиционирования по Coord
 		static void SetCursor( Coord v ) => Console.SetCursorPosition( v.X, v.Y );
+		// этот метод принмает только Coord, он не принимает 2 инта
 		#endregion
 	}
 }
