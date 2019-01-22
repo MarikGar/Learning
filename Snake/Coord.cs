@@ -51,10 +51,19 @@ namespace Learning
 		public static Coord operator -( Coord v )
 		  => new Coord { X = -v.X, Y = -v.Y };
 
+		// добавим оператор умножения на int: Coord * Scalar
+		public static Coord operator *( Coord c, int s ) => new Coord( c.X * s, c.Y * s );
+		// но чаще мы будем писать Scalar * Coord
+		public static Coord operator *( int s, Coord c ) => new Coord( c.X * s, c.Y * s );
+
 		// ненавижу эти тупые варнинги
 		public override int GetHashCode()
 			=> base.GetHashCode();
 		public override bool Equals( object obj )
 			=> base.Equals( obj );
+
+		// чтобы в отладчике или при пчати можно было видеть нормальное занчение, а не {Snake.Coord}
+		// перепишем(override) метод ToString, который есть у всех
+		public override string ToString() => $"( {X}, {Y} )";
 	}
 } // почитай, что такое неймспейсы.. хаватит уже тупить на мелочах

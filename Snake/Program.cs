@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
@@ -167,12 +168,13 @@ namespace Snake
 
 		#region Snake drawing & control		
 
+		static List<Coord> _snake = new List<Coord>();
 		// это связанные друг с другом переменные. держи их вместе
-		static Coord _head; // координаты головы Змеи (Head)
+		//static Coord _head; // координаты головы Змеи (Head)
 		static Coord _ofs; // это текущее направление движения (Offset)
 
-		static Coord _b1; // координаты 1 клетки тела 
-		static Coord _b2;
+		//static Coord _b1; // координаты 1 клетки тела 
+		//static Coord _b2;
 		static Coord _old;
 
 		// слишком много кода для настройки Змеи
@@ -183,16 +185,21 @@ namespace Snake
 			// установим Змею в первоначальное положение по центру Границ
 			// по горизонтали: голова Змеи в среднем столбце, тело тоже, идет вниз
 			// юзаем конструктор по 2м координатам
-			_head = new Coord( Width / 2, Height / 2 ); // по центру
-			_ofs = Coord.Zero;
+			// голова будет по центру
+			var head = new Coord( Width / 2, Height / 2 ); 
+			// голова будет в [0] значит ее добавим первой
+			_snake.Add( head );
 			// по вертикали: а тело на 1 клетку ниже
-			_b1 = _head; // здесь присваиваем _head
-			++_b1.Y; // а здесь делаем на 1летку ниже (увеличивае Y)
-					 // 2ая клетка еще на 1 клутку ниже
-			_b2 = _b1;
-			++_b2.Y;
-			// чтобы не затирала границу в (0,0)
-			_old = _head;
+			_snake.Add( head + Coord.UnitY );
+			// хорошо бы заменить на + 2 * Coord.UnitY.. так и сделаем
+			_snake.Add( head + 2 * Coord.UnitY );
+			// хоть визуально у нас ничо не изменилось, но мы избавились от кучи x,y,bx,by,cx,cy
+			// в принципе, не так уж много, но если бы у нас тело сразу было из 7 клеток, то уже запарило бы
+
+			// смещение (0,0) потому что пока Змея не двигается
+			_ofs = Coord.Zero;
+			// очитску присвоим head, чтобы не затирала границу в (0,0)
+			_old = head;
 		}
 
 		static void ControlSnake( UserKey userKey )
@@ -217,20 +224,28 @@ namespace Snake
 			// если змея не двигается, то ничего и не делаем
 			if (_ofs == Coord.Zero) return true;
 
-			// гораздо меньше кода и вроде как понятнее
-			// если ты всюду будешь таскать x,y или двустрочные массивы, то мы тя первыми сдадим в дурку
-			// а потому что ты сам от своих путаниц сойдешь с ума, а не по другйо причине
-			_old = _b2;
-			_b2 = _b1;
-			_b1 = _head;
-			_head += _ofs;
+			// чтобы не писать каждый раз _snake[0] или _snake[_snake.Count - 1 ]
+			// добавим в Utils Extension method LastItem
+			_old = _snake.LastItem();
+			// и выше мы вызвали наш метод так, будто он сразу был в List<T>, хотя его там не было, а мы сами тока что добавили
+
+			// запомни текущую позицию головы
+			var head = _snake.FirstItem();
+			// сдвинем всю змею от головы[0] к хвосту - значит вправо
+			Utils.ListShiftRight( _snake );
+			// теперь голова ушла на [1] (а в [0] у нас последний элемент, ты так захотел, но он нам не ужен)
+			// мы должны его заменить на новую позицю головы
+			head += _ofs;
+			_snake[ 0 ] = head;
+			// здесь мы не можем заюзать .FirstItem() потому что он только на чтение (мы получаем из него значение), 
+			// а не на запись, которой нам и надо изменить значение. а мы меняем
 
 			// код длиньше, но из него поянятно, что сравниваем чото для головы _head
-			if (_head.X == Width || _head.Y == Height || _head.X == 0 || _head.Y == 0) return false;
+			if (head.X == Width || head.Y == Height || head.X == 0 || head.Y == 0) return false;
 
 			// здесь условие изменится, потому что надо будет сранвивать не со 2ой клеткой
 			// а ваще с любой из тела (но пока оставим почти как есть)
-			if (_head == _b2) return false;
+			if (head == _snake[ 2 ]) return false; // оставим [2], иначе заипемся
 
 			// вот здесь будет двигаться Змея
 			// менять x,y и проверить, заодно, чтобы не вышло за экраны
@@ -247,14 +262,18 @@ namespace Snake
 			Console.Write( ' ' );
 
 			Console.ForegroundColor = ConsoleColor.Yellow;
-			SetCursor( _head );
-			Console.Write( SnakeHead );
 
-			SetCursor( _b1 );
-			Console.Write( SnakeBody);
-
-			SetCursor( _b2 );
+			// поскольку сначала у нас змея состоит из 3х клеток, то и будем рисовать 3 клетки
+			// а здесь можно змею нарисовать оч просто
+			// змея сместилась на 1 позицию
+			// там, где была раньше голова ([1]) надо поставить тело
+			SetCursor( _snake[ 1 ] );
 			Console.Write( SnakeBody );
+			SetCursor( _snake[ 2 ] );
+			Console.Write( SnakeBody );
+			// а вот голову уже нарисовать в новой [0]
+			SetCursor( _snake.FirstItem() );
+			Console.Write( SnakeHead );
 		}
 		#endregion
 

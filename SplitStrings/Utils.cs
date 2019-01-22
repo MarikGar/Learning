@@ -98,5 +98,15 @@ namespace Learning
 			list[ 0 ] = first;
 		}
 		#endregion
+
+		#region collections
+		// Extension метод отличается от обычного тока ключевым словом this в параметрах
+		// и его можно будет дергать для объекта так, будто он сразу там и был
+		// например, ниже мы определим метод последнего элемента для списка, 
+		// чтобы не писать list[ list.Count - 1 ], где можно ошибиться
+		public static T LastItem<T>( this List<T> lst ) => lst[ lst.Count - 1 ];
+		// и для нулевого тоже
+		public static T FirstItem<T>( this List<T> lst ) => lst[ 0 ];
+		#endregion
 	}
 }
