@@ -1,11 +1,12 @@
-﻿using System;
+﻿using System;			    
 using System.Collections.Generic; // Generic - переводится как шаблон. в этом неймспейсе находится List<T>
 
 namespace Learning
 {
 	// класс всяких утилиток/методов
-	public static class Utils
+	public static class  Utils
 	{
+		#region input & output
 		// поскольку запрос строки у юзера не такая уж уникальная операция 
 		// и может понадобиться везде
 		// вынес ее в отдельный метод/процедуру
@@ -48,7 +49,9 @@ namespace Learning
 			Print( text, color );
 			Console.WriteLine();
 		}
+		#endregion
 
+		#region randoms
 		// возвращает случайную строку из digits цифр
 		// 4: 8715  5047  5324  5481  4634
 		// 5: 87599 73232 10478 31672 82475
@@ -59,6 +62,7 @@ namespace Learning
 			return _rnd.Next( min, max ).ToString();
 		}
 		static readonly Random _rnd = new Random();
+		#endregion
 
 		#region Shifts
 		public static void ArrayShiftLeft <T> ( T[] arr )
@@ -72,11 +76,10 @@ namespace Learning
 		public static void ArrayShiftRight<T>( T[] arr )
 		{
 			// исправь чтобы сдвигал вправо
-			var last = arr[ 0 ];
-			for (int i = 0; i < arr.Length - 1; i++)
-				arr[ i ] = arr[ i + 1 ];
-			arr[ arr.Length - 1 ] = last;
-		}
+			var first = arr[ (arr.Length-1) ];
+			for (int i = (arr.Length-1); i > 0; i--)
+				arr[ i ] = arr[ i-1 ];
+			arr[ 0 ] = first; ; 		}
 
 		public static void ListShiftLeft<T>( List<T> list )
 		{
@@ -89,10 +92,10 @@ namespace Learning
 		public static void ListShiftRight<T>( List<T> list ) // для переименования жмем Ctrl+R
 		{
 			// исправь чтобы сдвигал вправо
-			var last = list[ 0 ];
-			for (int i = 0; i < list.Count - 1; i++)
-				list[ i ] = list[ i + 1 ];
-			list[ list.Count - 1 ] = last;
+			var first = list[ list.Count-1 ];
+			for (int i = (list.Count - 1); i > 0; i--)
+				list[ i ] = list[ i - 1 ];
+			list[ 0 ] = first;
 		}
 		#endregion
 	}

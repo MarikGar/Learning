@@ -51,9 +51,17 @@ class Test
 		Utils.ListShiftLeft( list );
 		PrintList( list, "AFTER" );
 
-		// test ArrayShiftRight
-		// test ListShiftLeft
-		// test ListShiftRight
+		Console.WriteLine();
+		var tmr = (int[])arr.Clone();
+		PrintArray( tmr, "BEFORE" );
+		Utils.ArrayShiftRight( tmr );
+		PrintArray( tmr, "AFTER" );
+
+		Console.WriteLine();
+		var listright = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+		PrintList( listright, "BEFORE" );
+		Utils.ListShiftRight( listright );
+		PrintList( listright, "AFTER" );   
 	}
 
 	static void Main()
