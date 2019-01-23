@@ -42,7 +42,8 @@ namespace Snake
 			// поскольку юзер все равно проиграет, то выведем
 			Console.SetCursorPosition( 0, Height + 1 );      // выставляет курсор в нужную позицию для выведения слова
 			Utils.Println( "Вы проиграли", ConsoleColor.Red );
-			Console.ReadKey();
+			Utils.Println( "Нажмите <Escape> для выхода из программы ", ConsoleColor.Yellow );
+			while (Console.ReadKey().Key != ConsoleKey.Escape) { }	 			
 		}
 
 		// Frame per Second
