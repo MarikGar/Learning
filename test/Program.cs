@@ -66,18 +66,19 @@ class Test
 	}
 	#endregion
 
+	const int Delta = 5;  
+
 	static void ParseString1()
 	{
 		var line = Console.ReadLine();
 		Console.WriteLine();
-		string [] lineparth = line.Split( ' ' );	  		
-		foreach (string s in lineparth)
+		string [] words = line.Split( ' ' );	  		
+		foreach (string s in words)
 		{
-			Console.WriteLine( s );
-			Console.WriteLine( s.Length );
+			Console.Write($"{s} "  + s.Length );   			
 			if (int.TryParse( s, out int result ))
 				{
-				   Console.WriteLine( (result * 3) );
+				   Console.Write(" " + (result * Delta) );
 				}
 			Console.WriteLine();
 				
