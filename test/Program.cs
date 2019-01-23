@@ -5,6 +5,7 @@ using Learning;
 
 class Test
 {
+	#region Test Utils
 	static void PrintArray<T>( T[] arr, string title )
 	{
 		Console.WriteLine( title );
@@ -63,12 +64,35 @@ class Test
 		Utils.ListShiftRight( listright );
 		PrintList( listright, "AFTER" );   
 	}
+	#endregion
+
+	static void ParseString1()
+	{
+		var line = Console.ReadLine();
+		Console.WriteLine();
+		string [] lineparth = line.Split( ' ' );	  		
+		foreach (string s in lineparth)
+		{
+			Console.WriteLine( s );
+			Console.WriteLine( s.Length );
+			if (int.TryParse( s, out int result ))
+				{
+				   Console.WriteLine( (result * 3) );
+				}
+			Console.WriteLine();
+				
+
+		}
+
+	}				  
+	
 
 	static void Main()
 	{
 		// чонить здеся
 
-		testShifts();
+		//testShifts();
+		ParseString1();
 
 		// finita la comedia
 		Console.WriteLine( "Done." );
