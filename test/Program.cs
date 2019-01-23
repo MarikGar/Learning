@@ -75,13 +75,11 @@ class Test
 		string [] words = line.Split( ' ' );	  		
 		foreach (string s in words)
 		{
-			Console.Write($"{s} "  + s.Length );   			
-			if (int.TryParse( s, out int result ))
-				{
-				   Console.Write(" " + (result * Delta) );
-				}
-			Console.WriteLine();
-				
+			   			
+			if (int.TryParse( s, out int result )) { }	   			
+			Console.WriteLine ( $"{s} {s.Length} {result * Delta}"); 
+
+
 
 		}
 
