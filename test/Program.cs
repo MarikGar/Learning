@@ -71,16 +71,23 @@ class Test
 	static void ParseString1()
 	{
 		var line = Console.ReadLine();
-		Console.WriteLine();
-		string [] words = line.Split( ' ' );	  		
+		string[] words = line.Split( ' ' );
 		foreach (string s in words)
 		{
-			   			
-			if (int.TryParse( s, out int result )) { }	   			
-			Console.WriteLine ( $"{s} {s.Length} {result * Delta}"); 
-
-
-
+			var isNum = int.TryParse( s, out var num );
+			// ?: не может использоваться в интерполяции строк
+			//Console.WriteLine ( $"{s} {s.Length} {(isNum) ? (num * 5).ToString() : string.Empty}" );
+			// потому заюзаем по-старому стилю
+			// {N} номера означают, какой параметр по счету выводить
+			// потому что можно вывести и наоборот, указав {2} {1} {0}
+			Console.WriteLine( "{0} {1} {2}", s, s.Length,
+			  // ?: должен вернуть одно из значений ОДИНАКОВОГО типа
+			  // у нас задача, либо число * 5, либо ничего(пустая строка)
+			  // значит один тип на оба параметра будет строка
+			  // НЕ ЧИСЛО, потому что пустую строку нельзя преобразовать в какоето число
+			  // а значит число надо преобразовать в строку
+			  // ну это просто: любое значение в C# можно преобразовать в строку вызвав у него .ToString()
+			  isNum ? (num * 5).ToString() : "" );
 		}
 
 	}				  
